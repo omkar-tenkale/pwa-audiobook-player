@@ -1,19 +1,19 @@
 
         const ASSETS = [
-  "assets/index.0b4286d7.js",
+  "assets/index.97ef70e6.js",
   "assets/disable-app-if-not-supported.9b4340fe.js",
-  "assets/view-artists.5fb85e38.js",
-  "assets/modal.c4e0007d.js",
-  "assets/add-to-playlist-modal.196af873.js",
-  "assets/create-or-rename-playlist.f3b3f40a.js",
+  "assets/view-artists.54400bf7.js",
+  "assets/modal.fa87dc6d.js",
+  "assets/add-to-playlist-modal.d3f18a9e.js",
+  "assets/create-or-rename-playlist.8f3e0c52.js",
   "assets/app-theme.c2072629.js",
   "assets/tracks-file-parser-worker.9dc4a2d2.js",
-  "assets/player.f36d397b.js",
-  "assets/details.1f89d91c.js",
-  "assets/search.96637d88.js",
-  "assets/settings.8ed8d9cd.js",
-  "assets/about.9a352860.js",
-  "assets/not-found.b4d399c2.js",
+  "assets/player.43cca512.js",
+  "assets/details.152d6d68.js",
+  "assets/search.2cce72b3.js",
+  "assets/settings.1bc82885.js",
+  "assets/about.686947dc.js",
+  "assets/not-found.76cbe57f.js",
   "assets/style.ad889449.css",
   "assets/va9E4kDNxMZdWfMOD5VvmojLeTY.c042fdbc.woff2",
   "assets/va9E4kDNxMZdWfMOD5Vvk4jLeTY.75f38e9c.woff2",
@@ -29,13 +29,13 @@
   "assets/va9B4kDNxMZdWfMOD5VnZKveSRf6TF0.460d60e3.woff2",
   "assets/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.53126e5f.woff2",
   "assets/va9B4kDNxMZdWfMOD5VnZKveRhf6.d7e96d52.woff2",
-  "assets/webfonts.21701949.css",
+  "assets/webfonts.0d46cfcb.css",
   "index.html",
   "manifest.webmanifest",
   "icons/icon_responsive.svg",
   "icons/icon_maskable.svg"
 ];
-        const VERSION = "f669c59d22bf4e10d1bdb272cb06dcbf67b05bc8";
+        const VERSION = "44215452ed4dbafebfec3141b3a0cb80bfab008e";
         self.addEventListener("fetch",(e=>{e.respondWith((async()=>{const{request:s}=e,t=new URL(s.url);if("GET"===s.method&&self.location.origin===t.origin){const e="navigate"===s.mode?"/index.html":s;return caches.match(e).then((e=>e||fetch(s)))}return fetch(s)})())})),self.addEventListener("install",(e=>{const s=caches.open(VERSION).then((e=>e.addAll(ASSETS)));e.waitUntil(s)})),self.addEventListener("activate",(e=>{self.clients.claim();const s=caches.keys().then((e=>{const s=e.map((e=>{if(e!==VERSION)return caches.delete(e)}));return Promise.all(s)}));e.waitUntil(s)})),self.addEventListener("message",(e=>{"skip-waiting"===e.data&&self.skipWaiting()}));
 
       
