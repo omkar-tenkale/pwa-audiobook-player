@@ -26,3 +26,6 @@ You can run the development server with:
 ```
 npm run dev
 ```
+
+
+https://gorgeous-bavarois-16fd12.netlify.app/
