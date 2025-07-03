@@ -32,10 +32,10 @@
   "assets/webfonts.0d46cfcb.css",
   "index.html",
   "manifest.webmanifest",
-  "/icons/icon_responsive.svg",
-  "/icons/icon_maskable.svg"
+  "./icons/icon_responsive.svg",
+  "./icons/icon_maskable.svg"
 ];
-        const VERSION = "3ba494542a978d0238948de11e94e7f529020603";
+        const VERSION = "b78ca2b7f0c91a7b78f0e87bf9e4587acbf6004c";
         self.addEventListener("fetch",(e=>{e.respondWith((async()=>{const{request:s}=e,t=new URL(s.url);if("GET"===s.method&&self.location.origin===t.origin){const e="navigate"===s.mode?"/index.html":s;return caches.match(e).then((e=>e||fetch(s)))}return fetch(s)})())})),self.addEventListener("install",(e=>{const s=caches.open(VERSION).then((e=>e.addAll(ASSETS)));e.waitUntil(s)})),self.addEventListener("activate",(e=>{self.clients.claim();const s=caches.keys().then((e=>{const s=e.map((e=>{if(e!==VERSION)return caches.delete(e)}));return Promise.all(s)}));e.waitUntil(s)})),self.addEventListener("message",(e=>{"skip-waiting"===e.data&&self.skipWaiting()}));
 
       
