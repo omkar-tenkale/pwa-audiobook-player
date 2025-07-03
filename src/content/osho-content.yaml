@@ -1,0 +1,76 @@
+# Osho Content Library
+# This YAML file serves as the source of truth for all Osho content
+
+series:
+  - id: "osho_hindi_discourses"
+    name: "Hindi Discourses"
+    description: "Osho's teachings in Hindi language"
+    year: "1980"
+    image: "/images/series/hindi-discourses.jpg"
+    tracks:
+      - id: "hd_001"
+        name: "Bin Bati Bin Tel - Part 1"
+        duration: 2700  # 45 minutes
+        trackNo: 1
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        description: "Osho's wisdom on inner light without external means"
+        topics: ["meditation", "inner light", "spirituality"]
+        
+      - id: "hd_002"
+        name: "Bin Bati Bin Tel - Part 2"
+        duration: 2700  # 45 minutes
+        trackNo: 2
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        description: "Continuing the exploration of inner illumination"
+        topics: ["consciousness", "enlightenment", "truth"]
+
+  - id: "osho_zen_teachings"
+    name: "Zen Teachings"
+    description: "Osho's interpretation of Zen philosophy"
+    year: "1985"
+    image: "/images/series/zen-teachings.jpg"
+    tracks:
+      - id: "zt_001"
+        name: "The Way of Zen"
+        duration: 2700  # 45 minutes
+        trackNo: 1
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        description: "Introduction to Zen consciousness and awareness"
+        topics: ["zen", "consciousness", "awareness"]
+        
+      - id: "zt_002"
+        name: "Beyond Mind"
+        duration: 2700  # 45 minutes
+        trackNo: 2
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        description: "Transcending the limitations of the mind"
+        topics: ["meditation", "transcendence", "no-mind"]
+
+standalone_talks: []
+
+topics:
+  - id: "meditation"
+    name: "Meditation"
+    description: "Techniques and philosophy of meditation"
+    
+  - id: "zen"
+    name: "Zen"
+    description: "Zen philosophy and practices"
+    
+  - id: "consciousness"
+    name: "Consciousness"
+    description: "Exploration of consciousness and awareness"
+    
+  - id: "spirituality"
+    name: "Spirituality"
+    description: "Spiritual growth and understanding"
+
+# Metadata
+metadata:
+  appName: "Osho Digital Library"
+  description: "A comprehensive digital library of Osho's teachings"
+  version: "1.0.0"
+  lastUpdated: "2024-01-15"
+  totalTracks: 4
+  totalSeries: 2
+  defaultTheme: "zen" 

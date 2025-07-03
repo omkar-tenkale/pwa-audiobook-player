@@ -8,7 +8,12 @@ interface FileHandle {
   file: FileSystemFileHandle
 }
 
-export type FileWrapper = FileLegacy | FileHandle
+interface FileUrl {
+  type: 'url'
+  url: string
+}
+
+export type FileWrapper = FileLegacy | FileHandle | FileUrl
 
 export type ImageType = Blob | undefined
 
@@ -50,6 +55,8 @@ export interface UnknownTrack {
   image?: ImageType
   fileWrapper: FileWrapper
   primaryColor?: number
+  description?: string
+  topics?: string[]
 }
 
 export interface Track extends BaseMusicItem, UnknownTrack {
@@ -67,6 +74,7 @@ export interface Album extends BaseMusicItemWithTrackIds {
   artists: string[]
   year?: string
   image?: ImageType
+  description?: string
 }
 
 export interface Artist extends BaseMusicItemWithTrackIds {

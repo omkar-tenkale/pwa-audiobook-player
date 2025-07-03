@@ -42,6 +42,12 @@ export const useAudioPlayer = (): void => {
       return fileWrapper.file
     }
 
+    if (fileWrapper.type === 'url') {
+      // For URL-based audio files, return the URL directly
+      return fileWrapper.url
+    }
+
+    // Handle file system access API (existing logic)
     const fileRef = fileWrapper.file
 
     let mode = await fileRef.queryPermission({ mode: 'read' })
@@ -83,7 +89,10 @@ export const useAudioPlayer = (): void => {
         // Setting src = '', changes src to site href address,
         // fully reset src by removing attribute itself.
         audio.removeAttribute('src')
-        URL.revokeObjectURL(previousAudioSrc)
+        // Only revoke object URLs (blob URLs), not direct URLs
+        if (previousAudioSrc.startsWith('blob:')) {
+          URL.revokeObjectURL(previousAudioSrc)
+        }
       }
 
       return
@@ -115,7 +124,12 @@ export const useAudioPlayer = (): void => {
 
     try {
       if (!audio.src) {
-        audio.src = URL.createObjectURL(audioFile)
+        // Handle URL-based audio files vs File objects
+        if (typeof audioFile === 'string') {
+          audio.src = audioFile
+        } else {
+          audio.src = URL.createObjectURL(audioFile)
+        }
       }
       // TODO: When active track is changed very rapidly this error occurs:
       // 'The play() request was interrupted by a new load request.'
