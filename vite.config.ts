@@ -75,8 +75,8 @@ export default defineConfig({
     ]),
     serviceWorker({
       manifest: {
-        short_name: 'Snae',
-        name: 'Snae player',
+        short_name: 'Osho',
+        name: 'Osho Digital Library',
         start_url: '/',
         scope: '../',
         theme_color: '#1a1a1a',
