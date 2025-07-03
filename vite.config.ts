@@ -17,7 +17,7 @@ const createMScreenshot = (name: string, sizes: string) => ({
 
 export default defineConfig({
   // Set base path for GitHub Pages deployment
-  base: process.env.NODE_ENV === 'production' ? '/osho-digital-library/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/pwa-audiobook-player/' : '/',
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
