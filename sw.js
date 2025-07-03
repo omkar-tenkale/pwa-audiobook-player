@@ -1,19 +1,19 @@
 
         const ASSETS = [
-  "assets/index.94c5adfb.js",
+  "assets/index.97ef70e6.js",
   "assets/disable-app-if-not-supported.9b4340fe.js",
-  "assets/view-artists.67ed7727.js",
-  "assets/modal.2a7c0f3a.js",
-  "assets/add-to-playlist-modal.b82665fa.js",
-  "assets/create-or-rename-playlist.cc11afee.js",
+  "assets/view-artists.54400bf7.js",
+  "assets/modal.fa87dc6d.js",
+  "assets/add-to-playlist-modal.d3f18a9e.js",
+  "assets/create-or-rename-playlist.8f3e0c52.js",
   "assets/app-theme.c2072629.js",
   "assets/tracks-file-parser-worker.9dc4a2d2.js",
-  "assets/player.99171b47.js",
-  "assets/details.44084e8e.js",
-  "assets/search.1d10f45b.js",
-  "assets/settings.ef5a56bc.js",
-  "assets/about.5a7cc315.js",
-  "assets/not-found.40dc1d1f.js",
+  "assets/player.43cca512.js",
+  "assets/details.152d6d68.js",
+  "assets/search.2cce72b3.js",
+  "assets/settings.1bc82885.js",
+  "assets/about.686947dc.js",
+  "assets/not-found.76cbe57f.js",
   "assets/style.ad889449.css",
   "assets/va9E4kDNxMZdWfMOD5VvmojLeTY.c042fdbc.woff2",
   "assets/va9E4kDNxMZdWfMOD5Vvk4jLeTY.75f38e9c.woff2",
@@ -35,7 +35,7 @@
   "/icons/icon_responsive.svg",
   "/icons/icon_maskable.svg"
 ];
-        const VERSION = "446131f6f6654990a03f8c0e91949e3c2d28a3ea";
+        const VERSION = "3ba494542a978d0238948de11e94e7f529020603";
         self.addEventListener("fetch",(e=>{e.respondWith((async()=>{const{request:s}=e,t=new URL(s.url);if("GET"===s.method&&self.location.origin===t.origin){const e="navigate"===s.mode?"/index.html":s;return caches.match(e).then((e=>e||fetch(s)))}return fetch(s)})())})),self.addEventListener("install",(e=>{const s=caches.open(VERSION).then((e=>e.addAll(ASSETS)));e.waitUntil(s)})),self.addEventListener("activate",(e=>{self.clients.claim();const s=caches.keys().then((e=>{const s=e.map((e=>{if(e!==VERSION)return caches.delete(e)}));return Promise.all(s)}));e.waitUntil(s)})),self.addEventListener("message",(e=>{"skip-waiting"===e.data&&self.skipWaiting()}));
 
       
