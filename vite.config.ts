@@ -55,7 +55,9 @@ export default defineConfig({
     },
   },
   plugins: [
-    createHtmlPlugin(),
+    createHtmlPlugin({
+      minify: true,
+    }),
     // Vite always bundles or imports all scripts into one file.
     // In unsupported browsers we want to display error message about it,
     // but because everything is bundled into one file, main app bundle
