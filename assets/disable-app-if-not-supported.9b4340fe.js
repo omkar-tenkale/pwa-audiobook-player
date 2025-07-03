@@ -1,0 +1,1 @@
+const n=["IntersectionObserver","ResizeObserver","queueMicrotask","PointerEvent"].every((n=>n in window))&&CSS.supports("width","max(1px, 2px)")&&"finished"in Animation.prototype&&(()=>{try{const n={b:1};return null==n||n.b,!0}catch(n){return!1}})();n||document.documentElement.setAttribute("app-not-supported",""),window.isSupportedBrowser=n;
