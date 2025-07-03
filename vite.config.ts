@@ -16,6 +16,8 @@ const createMScreenshot = (name: string, sizes: string) => ({
 })
 
 export default defineConfig({
+  // Set base path for GitHub Pages deployment
+  base: process.env.NODE_ENV === 'production' ? '/osho-digital-library/' : '/',
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
@@ -77,8 +79,8 @@ export default defineConfig({
       manifest: {
         short_name: 'Osho',
         name: 'Osho Digital Library',
-        start_url: '/',
-        scope: '../',
+        start_url: './',
+        scope: './',
         theme_color: '#1a1a1a',
         background_color: '#1a1a1a',
         display: 'standalone',
