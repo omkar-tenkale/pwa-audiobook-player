@@ -14,10 +14,10 @@ export type RepeatState = typeof RepeatState[keyof typeof RepeatState]
 
 interface State {
   isPlaying: boolean
-  trackIds: string[]
+  trackIds: readonly string[]
   // Used to store tracks in original order
   // when shuffle is on.
-  originalTrackIds: string[]
+  originalTrackIds: readonly string[]
   // Currently playing audio track.
   activeTrackIndex: number
   repeat: RepeatState
@@ -27,6 +27,8 @@ interface State {
   duration: number
   isMuted: boolean
   volume: number
+  // Stores saved timestamps for each track ID
+  trackTimestamps: Record<string, number>
   readonly activeTrackId: string
   readonly activeTrack?: Track
 }
@@ -48,6 +50,7 @@ export const createPlayerStore = () => {
     duration: 0,
     isMuted: false,
     volume: 100,
+    trackTimestamps: {},
     get activeTrackId(): string {
       // eslint-disable-next-line no-use-before-define
       return activeTrackIdMemo()
@@ -99,13 +102,18 @@ export const createPlayerStore = () => {
   }
 
   const playTrack = (index: number, tracks?: TrackIds) => {
-    batch(() => {
-      setState({
-        currentTime: 0,
-        currentTimeChanged: true,
-        activeTrackIndex: index,
-      })
+    // Get track ID BEFORE any state changes (including shuffle)
+    let trackId: string
+    if (tracks) {
+      trackId = tracks[index]
+    } else {
+      trackId = state.trackIds[index]
+    }
+    
+    // Get saved timestamp for this track
+    const savedTimestamp = getSavedTrackTimestamp(trackId)
 
+    batch(() => {
       if (tracks) {
         setState({
           trackIds: [...tracks],
@@ -113,8 +121,21 @@ export const createPlayerStore = () => {
 
         if (state.shuffle) {
           setShuffleEnabledTracksState(index, tracks)
+        } else {
+          setState({
+            activeTrackIndex: index,
+          })
         }
+      } else {
+        setState({
+          activeTrackIndex: index,
+        })
       }
+      
+      setState({
+        currentTime: savedTimestamp,
+        currentTimeChanged: true,
+      })
     })
 
     // Set isPlaying to true if track exists.
@@ -313,6 +334,21 @@ export const createPlayerStore = () => {
     })
   }
 
+  const saveTrackTimestamp = (trackId: string, timestamp: number) => {
+    // Only save if timestamp is significant (more than 5 seconds and not near the end)
+    if (timestamp > 5 && timestamp < state.duration - 10) {
+      setState('trackTimestamps', trackId, timestamp)
+    }
+  }
+
+  const getSavedTrackTimestamp = (trackId: string): number => {
+    return state.trackTimestamps[trackId] || 0
+  }
+
+  const clearTrackTimestamp = (trackId: string) => {
+    setState('trackTimestamps', trackId, undefined!)
+  }
+
   // TODO. This is broken.
   createEffect(() => {
     const { tracks } = entities
@@ -347,6 +383,9 @@ export const createPlayerStore = () => {
     setDuration,
     setVolume,
     addToQueue,
+    saveTrackTimestamp,
+    getSavedTrackTimestamp,
+    clearTrackTimestamp,
   }
 
   const persistedItems = [
@@ -369,6 +408,11 @@ export const createPlayerStore = () => {
       key: 'player-repeat',
       selector: () => state.repeat,
       load: (repeat: State['repeat']) => setState({ repeat }),
+    },
+    {
+      key: 'player-track-timestamps',
+      selector: () => state.trackTimestamps,
+      load: (trackTimestamps: Record<string, number>) => setState({ trackTimestamps }),
     },
   ]
 

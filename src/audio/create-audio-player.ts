@@ -130,6 +130,20 @@ export const useAudioPlayer = (): void => {
         } else {
           audio.src = URL.createObjectURL(audioFile)
         }
+        // Set the saved currentTime after audio source is set
+        if (playerState.currentTimeChanged) {
+          const targetTime = playerState.currentTime
+          
+          if (audio.readyState >= 1) {
+            audio.currentTime = targetTime
+          } else {
+            const setTimeOnLoad = () => {
+              audio.currentTime = targetTime
+              audio.removeEventListener('loadedmetadata', setTimeOnLoad)
+            }
+            audio.addEventListener('loadedmetadata', setTimeOnLoad)
+          }
+        }
       }
       // TODO: When active track is changed very rapidly this error occurs:
       // 'The play() request was interrupted by a new load request.'
@@ -152,7 +166,24 @@ export const useAudioPlayer = (): void => {
 
   createEffect(() => {
     if (playerState.currentTimeChanged) {
-      audio.currentTime = untrack(() => playerState.currentTime)
+      const targetTime = untrack(() => playerState.currentTime)
+      const currentTrack = untrack(() => playerState.activeTrack)
+      
+              // Only set currentTime if we have a source and we're not changing tracks
+        // (track changes are handled in the main audio effect)
+        if (audio.src && currentTrack) {
+          // If audio is ready, set currentTime immediately
+          if (audio.readyState >= 1) { // HAVE_METADATA
+            audio.currentTime = targetTime
+          } else {
+            // Otherwise, wait for loadedmetadata event
+            const setTimeOnLoad = () => {
+              audio.currentTime = targetTime
+              audio.removeEventListener('loadedmetadata', setTimeOnLoad)
+            }
+            audio.addEventListener('loadedmetadata', setTimeOnLoad)
+          }
+        }
     }
   })
 
@@ -160,11 +191,24 @@ export const useAudioPlayer = (): void => {
     playerActions.setDuration(audio.duration)
   }
   audio.ontimeupdate = () => {
-    playerActions.setCurrentTime(audio.currentTime)
+    const currentTime = audio.currentTime
+    playerActions.setCurrentTime(currentTime)
+    
+    // Save timestamp periodically during playback
+    const activeTrack = playerState.activeTrack
+    if (activeTrack && currentTime > 0) {
+      playerActions.saveTrackTimestamp(activeTrack.id, currentTime)
+    }
   }
 
   audio.onended = () => {
-    const { repeat } = playerState
+    const { repeat, activeTrack } = playerState
+    
+    // Clear timestamp when track finishes playing
+    if (activeTrack) {
+      playerActions.clearTrackTimestamp(activeTrack.id)
+    }
+    
     if (repeat !== RepeatState.ONCE) {
       playerActions.playNextTrack(repeat === RepeatState.OFF)
     }
