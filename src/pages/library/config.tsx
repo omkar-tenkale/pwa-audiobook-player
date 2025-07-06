@@ -20,18 +20,6 @@ const SORT_YEAR = { name: 'Year', key: MusicItemKey.YEAR } as const
 
 export const CONFIG: readonly LibraryPageConfig[] = [
   {
-    ...configs.BASE_TRACKS_CONFIG,
-    icon: 'musicNoteOutline',
-    iconSelected: 'musicNote',
-    sortOptions: [
-      SORT_NAME,
-      { name: 'Album', key: MusicItemKey.ALBUM },
-      { name: 'Artists', key: MusicItemKey.ARTISTS },
-      SORT_YEAR,
-      { name: 'Duration', key: MusicItemKey.DURATION },
-    ],
-  },
-  {
     ...configs.BASE_ALBUMS_CONFIG,
     icon: 'albumOutline',
     iconSelected: 'album',
