@@ -261,8 +261,6 @@ export const useAudioPlayer = (): void => {
       return
     }
 
-    const { shiftKey } = e
-
     switch (e.code) {
       case KeyboardCode.SPACE:
         playerActions.playPause()
@@ -270,18 +268,6 @@ export const useAudioPlayer = (): void => {
       case KeyboardCode.M:
         playerActions.toggleMute()
         break
-      case KeyboardCode.N:
-        if (shiftKey) {
-          playerActions.playNextTrack()
-          break
-        }
-        return
-      case KeyboardCode.P:
-        if (shiftKey) {
-          playerActions.playPreveousTrack()
-          break
-        }
-        return
       default:
         return
     }
