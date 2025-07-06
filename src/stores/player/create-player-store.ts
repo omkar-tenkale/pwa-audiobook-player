@@ -31,6 +31,8 @@ interface State {
   trackTimestamps: Record<string, number>
   // Flag to prevent time updates during track switching
   isSwitchingTracks: boolean
+  // Last played track ID for restoration on app load
+  lastPlayedTrackId: string
   readonly activeTrackId: string
   readonly activeTrack?: Track
 }
@@ -54,6 +56,7 @@ export const createPlayerStore = () => {
     volume: 100,
     trackTimestamps: {},
     isSwitchingTracks: false,
+    lastPlayedTrackId: '',
     get activeTrackId(): string {
       // eslint-disable-next-line no-use-before-define
       return activeTrackIdMemo()
@@ -145,6 +148,7 @@ export const createPlayerStore = () => {
       setState({
         currentTime: savedTimestamp,
         currentTimeChanged: true,
+        lastPlayedTrackId: trackId,
       })
     })
 
@@ -371,6 +375,48 @@ export const createPlayerStore = () => {
     setState('trackTimestamps', trackId, undefined!)
   }
 
+  const restoreLastPlayedTrack = () => {
+    const { lastPlayedTrackId } = state
+    
+    if (!lastPlayedTrackId) {
+      console.log('[Player] No last played track to restore')
+      return
+    }
+
+    const track = entities.tracks[lastPlayedTrackId]
+    if (!track) {
+      console.log(`[Player] Last played track ${lastPlayedTrackId} not found in library`)
+      return
+    }
+
+    // Get all tracks from the library
+    const allTracks = Object.values(entities.tracks)
+    const allTrackIds = allTracks.map(t => t.id)
+    
+    // Find the index of the last played track
+    const trackIndex = allTrackIds.indexOf(lastPlayedTrackId)
+    
+    if (trackIndex === -1) {
+      console.log(`[Player] Last played track ${lastPlayedTrackId} not found in track list`)
+      return
+    }
+
+    console.log(`[Player] Restoring last played track: ${track.name}`)
+    
+    // Initialize the player with the last played track but don't start playing
+    batch(() => {
+      setState({
+        trackIds: allTrackIds,
+        activeTrackIndex: trackIndex,
+        // Get saved timestamp for this track
+        currentTime: getSavedTrackTimestamp(lastPlayedTrackId),
+        currentTimeChanged: true,
+        // Don't auto-play, just prepare the track
+        isPlaying: false,
+      })
+    })
+  }
+
   // TODO. This is broken.
   createEffect(() => {
     const { tracks } = entities
@@ -385,6 +431,18 @@ export const createPlayerStore = () => {
       // Active track index might have changed if some tracks were removed.
       setState('activeTrackIndex', state.trackIds.indexOf(activeTrackId))
     })
+  })
+
+  // Auto-restore last played track when entities are loaded
+  createEffect(() => {
+    const { tracks } = entities
+    const { lastPlayedTrackId } = state
+    
+    // Only restore if we have tracks, a saved track ID, and no active track yet
+    if (Object.keys(tracks).length > 0 && lastPlayedTrackId && state.activeTrackIndex === -1) {
+      console.log('[Player] Entities loaded, attempting to restore last played track')
+      restoreLastPlayedTrack()
+    }
   })
 
   const actions = {
@@ -408,6 +466,7 @@ export const createPlayerStore = () => {
     saveTrackTimestamp,
     getSavedTrackTimestamp,
     clearTrackTimestamp,
+    restoreLastPlayedTrack,
   }
 
   const persistedItems = [
@@ -435,6 +494,11 @@ export const createPlayerStore = () => {
       key: 'player-track-timestamps',
       selector: () => state.trackTimestamps,
       load: (trackTimestamps: Record<string, number>) => setState({ trackTimestamps }),
+    },
+    {
+      key: 'player-last-played-track-id',
+      selector: () => state.lastPlayedTrackId,
+      load: (lastPlayedTrackId: string) => setState({ lastPlayedTrackId }),
     },
   ]
 
