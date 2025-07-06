@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { ViteWebfontDownload } from 'vite-plugin-webfont-dl'
+// import { ViteWebfontDownload } from 'vite-plugin-webfont-dl' // Removed - no longer needed
 import manifest from './package.json'
 import { mangleClassNames } from './lib/vite-mangle-classnames'
 import { injectScriptsToHtmlDuringBuild } from './lib/vite-inject-scripts-to-html'
@@ -74,9 +74,8 @@ export default defineConfig({
     solidPlugin({
       hot: false,
     }),
-    ViteWebfontDownload([
-      'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500&display=swap',
-    ]),
+    // ViteWebfontDownload plugin removed to eliminate Google Fonts dependency
+    // Now using system fonts for better offline performance
     serviceWorker({
       manifest: {
         short_name: 'Osho',
