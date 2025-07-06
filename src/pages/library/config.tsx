@@ -41,6 +41,14 @@ export const CONFIG: readonly LibraryPageConfig[] = [
       SORT_YEAR,
     ],
   },
+  {
+    ...configs.BASE_HISTORY_CONFIG,
+    icon: 'playlistPlay',
+    iconSelected: 'playlistPlay',
+    sortOptions: [
+      { name: 'Most recent', key: MusicItemKey.NAME },
+    ],
+  },
 ] as const
 
 export const LIBRARY_PATH = '/library'

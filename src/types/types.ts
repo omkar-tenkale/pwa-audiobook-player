@@ -22,6 +22,7 @@ export const MusicItemType = {
   ALBUM: 1,
   ARTIST: 2,
   PLAYLIST: 3,
+  HISTORY: 4,
 } as const
 
 export type MusicItemType = typeof MusicItemType[keyof typeof MusicItemType]

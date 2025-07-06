@@ -13,6 +13,7 @@ interface LibraryItemSortState {
   [MusicItemType.ALBUM]: keyof Album
   [MusicItemType.ARTIST]: keyof Artist
   [MusicItemType.PLAYLIST]: keyof Playlist
+  [MusicItemType.HISTORY]: keyof Track
 }
 
 interface State {
@@ -31,6 +32,7 @@ export const createLibraryStore = () => {
       [MusicItemType.ALBUM]: MusicItemKey.NAME,
       [MusicItemType.ARTIST]: MusicItemKey.NAME,
       [MusicItemType.PLAYLIST]: MusicItemKey.NAME,
+      [MusicItemType.HISTORY]: MusicItemKey.NAME,
     },
   })
 

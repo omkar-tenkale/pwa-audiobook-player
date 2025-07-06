@@ -21,6 +21,8 @@ export const LibraryPage: VoidComponent<LibraryPageConfig> = (props) => {
         return dataState.artists
       case MusicItemType.PLAYLIST:
         return dataState.playlists
+      case MusicItemType.HISTORY:
+        return {} // History component generates its own items from player store
       default:
         throw new Error('Wrong item type')
     }
