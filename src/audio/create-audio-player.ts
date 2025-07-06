@@ -216,14 +216,20 @@ export const useAudioPlayer = (): void => {
     console.log(`[AudioPlayer] Duration changed: ${audio.duration}s`)
     playerActions.setDuration(audio.duration)
   }
+  
   audio.ontimeupdate = () => {
     const currentTime = audio.currentTime
-    playerActions.setCurrentTime(currentTime)
-    
-    // Save timestamp periodically during playback
     const activeTrack = playerState.activeTrack
-    if (activeTrack && currentTime > 0) {
-      playerActions.saveTrackTimestamp(activeTrack.id, currentTime)
+    
+    // Only update time if we have an active track and it matches the current audio source
+    // This prevents race conditions when switching tracks
+    if (activeTrack && audio.src) {
+      playerActions.setCurrentTime(currentTime)
+      
+      // Save timestamp periodically during playback
+      if (currentTime > 0) {
+        playerActions.saveTrackTimestamp(activeTrack.id, currentTime)
+      }
     }
   }
 

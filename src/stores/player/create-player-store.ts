@@ -29,6 +29,8 @@ interface State {
   volume: number
   // Stores saved timestamps for each track ID
   trackTimestamps: Record<string, number>
+  // Flag to prevent time updates during track switching
+  isSwitchingTracks: boolean
   readonly activeTrackId: string
   readonly activeTrack?: Track
 }
@@ -51,6 +53,7 @@ export const createPlayerStore = () => {
     isMuted: false,
     volume: 100,
     trackTimestamps: {},
+    isSwitchingTracks: false,
     get activeTrackId(): string {
       // eslint-disable-next-line no-use-before-define
       return activeTrackIdMemo()
@@ -112,8 +115,15 @@ export const createPlayerStore = () => {
     
     // Get saved timestamp for this track
     const savedTimestamp = getSavedTrackTimestamp(trackId)
+    console.log(`[Player] Playing track ${trackId}, saved timestamp: ${savedTimestamp}s`)
 
     batch(() => {
+      // Set switching flag to prevent time updates from interfering
+      console.log(`[Player] Setting isSwitchingTracks flag for track ${trackId}`)
+      setState({
+        isSwitchingTracks: true,
+      })
+      
       if (tracks) {
         setState({
           trackIds: [...tracks],
@@ -140,6 +150,12 @@ export const createPlayerStore = () => {
 
     // Set isPlaying to true if track exists.
     setState('isPlaying', !!state.activeTrack)
+    
+    // Reset switching flag after a short delay to allow track switch to complete
+    setTimeout(() => {
+      console.log(`[Player] Clearing isSwitchingTracks flag for track ${trackId}`)
+      setState({ isSwitchingTracks: false })
+    }, 100)
   }
 
   const playNextTrack = (playUnlessLastTrack = false) => {
@@ -292,8 +308,14 @@ export const createPlayerStore = () => {
   }
 
   const setCurrentTime = (payload: number) => {
+    const shouldPreserveTimeChanged = state.isSwitchingTracks && state.currentTimeChanged
+    if (shouldPreserveTimeChanged) {
+      console.log(`[Player] Preserving currentTimeChanged during track switch, time: ${payload}`)
+    }
+    
     setState({
-      currentTimeChanged: false,
+      // Don't reset currentTimeChanged during track switching to preserve saved timestamp restoration
+      currentTimeChanged: state.isSwitchingTracks ? state.currentTimeChanged : false,
       currentTime: payload,
     })
   }
