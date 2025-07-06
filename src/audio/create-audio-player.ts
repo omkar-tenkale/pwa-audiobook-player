@@ -13,6 +13,7 @@ import { isEventMeantForTextInput } from '../utils'
 import { KeyboardCode } from '../utils/key-codes'
 import { MusicImagesContext } from '../components/music-image/data-context'
 import { toast } from '~/components/toast/toast'
+import { getCachedAudio } from './audio-cache'
 
 const toastPlayerError = () => {
   toast({
@@ -32,21 +33,30 @@ export const useAudioPlayer = (): void => {
     trackAudioFile,
     { refetch: refetchTrackAudioFile, mutate: mutateTrackAudioFile },
   ] = createResource(activeTrack, async (track) => {
+    console.log(`[AudioPlayer] Processing track:`, track?.name || 'unknown')
     const fileWrapper = track?.fileWrapper
 
     if (!fileWrapper) {
+      console.log(`[AudioPlayer] No fileWrapper found`)
       return undefined
     }
 
+    console.log(`[AudioPlayer] FileWrapper type: ${fileWrapper.type}`)
+
     if (fileWrapper.type === 'file') {
+      console.log(`[AudioPlayer] Using direct file`)
       return fileWrapper.file
     }
 
     if (fileWrapper.type === 'url') {
-      // For URL-based audio files, return the URL directly
-      return fileWrapper.url
+      console.log(`[AudioPlayer] Using URL with caching: ${fileWrapper.url}`)
+      // For URL-based audio files, use caching
+      const cachedUrl = await getCachedAudio(fileWrapper.url)
+      console.log(`[AudioPlayer] Got cached URL: ${cachedUrl}`)
+      return cachedUrl
     }
 
+    console.log(`[AudioPlayer] Using file system access API`)
     // Handle file system access API (existing logic)
     const fileRef = fileWrapper.file
 
@@ -82,15 +92,20 @@ export const useAudioPlayer = (): void => {
     const { isPlaying } = playerState
     const audioFile = trackAudioFile()
 
+    console.log(`[AudioPlayer] Effect triggered - isPlaying: ${isPlaying}, loading: ${trackAudioFile.loading}`)
+
     if (trackAudioFile.loading) {
+      console.log(`[AudioPlayer] Audio file loading, cleaning up previous src`)
       const previousAudioSrc = audio.src
       if (previousAudioSrc) {
+        console.log(`[AudioPlayer] Previous src: ${previousAudioSrc}`)
         audio.src = ''
         // Setting src = '', changes src to site href address,
         // fully reset src by removing attribute itself.
         audio.removeAttribute('src')
         // Only revoke object URLs (blob URLs), not direct URLs
         if (previousAudioSrc.startsWith('blob:')) {
+          console.log(`[AudioPlayer] Revoking blob URL: ${previousAudioSrc}`)
           URL.revokeObjectURL(previousAudioSrc)
         }
       }
@@ -99,6 +114,7 @@ export const useAudioPlayer = (): void => {
     }
 
     if (!isPlaying) {
+      console.log(`[AudioPlayer] Not playing, pausing audio`)
       audio.pause()
       return
     }
@@ -124,15 +140,22 @@ export const useAudioPlayer = (): void => {
 
     try {
       if (!audio.src) {
+        console.log(`[AudioPlayer] Setting audio source, audioFile type: ${typeof audioFile}`)
         // Handle URL-based audio files vs File objects
         if (typeof audioFile === 'string') {
+          console.log(`[AudioPlayer] Setting string URL: ${audioFile}`)
+          console.log(`[AudioPlayer] Is cached blob URL: ${audioFile.startsWith('blob:')}`)
           audio.src = audioFile
         } else {
+          console.log(`[AudioPlayer] Creating object URL for File object`)
           audio.src = URL.createObjectURL(audioFile)
         }
+        console.log(`[AudioPlayer] Audio src set to: ${audio.src}`)
+        
         // Set the saved currentTime after audio source is set
         if (playerState.currentTimeChanged) {
           const targetTime = playerState.currentTime
+          console.log(`[AudioPlayer] Restoring currentTime to: ${targetTime}`)
           
           if (audio.readyState >= 1) {
             audio.currentTime = targetTime
@@ -147,9 +170,10 @@ export const useAudioPlayer = (): void => {
       }
       // TODO: When active track is changed very rapidly this error occurs:
       // 'The play() request was interrupted by a new load request.'
+      console.log(`[AudioPlayer] Starting playback`)
       audio.play()
     } catch (err) {
-      console.error(err)
+      console.error(`[AudioPlayer] Error during playback:`, err)
 
       playerActions.pause()
       toastPlayerError()
@@ -157,7 +181,8 @@ export const useAudioPlayer = (): void => {
   })
 
   audio.onerror = (err) => {
-    console.error(err)
+    console.error(`[AudioPlayer] Audio error:`, err)
+    console.log(`[AudioPlayer] Audio src when error occurred: ${audio.src}`)
     batch(() => {
       playerActions.pause()
       toastPlayerError()
@@ -188,6 +213,7 @@ export const useAudioPlayer = (): void => {
   })
 
   audio.ondurationchange = () => {
+    console.log(`[AudioPlayer] Duration changed: ${audio.duration}s`)
     playerActions.setDuration(audio.duration)
   }
   audio.ontimeupdate = () => {
@@ -203,6 +229,9 @@ export const useAudioPlayer = (): void => {
 
   audio.onended = () => {
     const { repeat, activeTrack } = playerState
+    
+    console.log(`[AudioPlayer] Track ended: ${activeTrack?.name || 'unknown'}`)
+    console.log(`[AudioPlayer] Repeat state: ${repeat}`)
     
     // Clear timestamp when track finishes playing
     if (activeTrack) {
