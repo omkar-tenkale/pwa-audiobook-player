@@ -12,7 +12,7 @@ series:
         name: "Bin Bati Bin Tel - Part 1"
         duration: 2700  # 45 minutes
         trackNo: 1
-        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
         description: "Osho's wisdom on inner light without external means"
         topics: ["meditation", "inner light", "spirituality"]
         
@@ -20,7 +20,7 @@ series:
         name: "Bin Bati Bin Tel - Part 2"
         duration: 2700  # 45 minutes
         trackNo: 2
-        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
         description: "Continuing the exploration of inner illumination"
         topics: ["consciousness", "enlightenment", "truth"]
 
@@ -34,7 +34,7 @@ series:
         name: "The Way of Zen"
         duration: 2700  # 45 minutes
         trackNo: 1
-        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
         description: "Introduction to Zen consciousness and awareness"
         topics: ["zen", "consciousness", "awareness"]
         
@@ -42,7 +42,7 @@ series:
         name: "Beyond Mind"
         duration: 2700  # 45 minutes
         trackNo: 2
-        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Bin_Bati_Bin_Tel_05.mp3"
+        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
         description: "Transcending the limitations of the mind"
         topics: ["meditation", "transcendence", "no-mind"]
 
