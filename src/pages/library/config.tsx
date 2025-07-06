@@ -61,12 +61,6 @@ export const CONFIG: readonly LibraryPageConfig[] = [
     ],
   },
   {
-    ...configs.BASE_ARTISTS_CONFIG,
-    icon: 'personOutline',
-    iconSelected: 'person',
-    sortOptions: [SORT_NAME],
-  },
-  {
     ...configs.BASE_PLAYLISTS_CONFIG,
     icon: 'playlist',
     iconSelected: 'playlist',

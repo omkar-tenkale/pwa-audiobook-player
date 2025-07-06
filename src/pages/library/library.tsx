@@ -57,7 +57,6 @@ const TopBar = (props: TopBar) => {
     const PAGE_TO_TYPE_MAP = {
       tracks: MusicItemType.TRACK,
       albums: MusicItemType.ALBUM,
-      artists: MusicItemType.ARTIST,
       playlists: MusicItemType.PLAYLIST,
     }
 
@@ -174,7 +173,6 @@ const Library = (): JSXElement => {
   const selectedPage = useMapRouteToValue({
     '/library/tracks': () => MusicItemType.TRACK,
     '/library/albums': () => MusicItemType.ALBUM,
-    '/library/artists': () => MusicItemType.ARTIST,
     '/library/playlists': () => MusicItemType.PLAYLIST,
   })
 
