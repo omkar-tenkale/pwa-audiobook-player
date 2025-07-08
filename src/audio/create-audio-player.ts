@@ -116,6 +116,10 @@ export const useAudioPlayer = (): void => {
     if (!isPlaying) {
       console.log(`[AudioPlayer] Not playing, pausing audio`)
       audio.pause()
+      // Destroy active minute when paused
+      if (activeTrack()) {
+        playerActions.destroyCurrentActiveMinute()
+      }
       return
     }
 
@@ -171,7 +175,16 @@ export const useAudioPlayer = (): void => {
       // TODO: When active track is changed very rapidly this error occurs:
       // 'The play() request was interrupted by a new load request.'
       console.log(`[AudioPlayer] Starting playback`)
-      audio.play()
+      audio.play().then(() => {
+        // Ensure active minute when playback starts successfully
+        if (activeTrack()) {
+          playerActions.ensureActiveMinuteForCurrentTime(activeTrack()!.id, playerState.currentTime)
+        }
+      }).catch(err => {
+        console.error(`[AudioPlayer] Error during playback:`, err)
+        playerActions.pause()
+        toastPlayerError()
+      })
     } catch (err) {
       console.error(`[AudioPlayer] Error during playback:`, err)
 
@@ -239,8 +252,9 @@ export const useAudioPlayer = (): void => {
     console.log(`[AudioPlayer] Track ended: ${activeTrack?.name || 'unknown'}`)
     console.log(`[AudioPlayer] Repeat state: ${repeat}`)
     
-    // Clear timestamp when track finishes playing
+    // Destroy active minute when track ends
     if (activeTrack) {
+      playerActions.destroyCurrentActiveMinute()
       playerActions.clearTrackTimestamp(activeTrack.id)
     }
     

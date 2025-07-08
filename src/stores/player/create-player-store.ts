@@ -12,6 +12,12 @@ export const RepeatState = {
 } as const
 export type RepeatState = typeof RepeatState[keyof typeof RepeatState]
 
+interface ActiveMinute {
+  activeminute_timestamp_ms: number
+  track_id: string
+  track_timestamp_ms: number
+}
+
 interface State {
   isPlaying: boolean
   trackIds: readonly string[]
@@ -27,12 +33,12 @@ interface State {
   duration: number
   isMuted: boolean
   volume: number
-  // Stores saved timestamps for each track ID
-  trackTimestamps: Record<string, number>
+  // ActiveMinute system - stores persisted active listening minutes
+  activeMinutes: ActiveMinute[]
+  // Current ActiveMinute in memory (not persisted until minute completes)
+  currentActiveMinute: ActiveMinute | null
   // Flag to prevent time updates during track switching
   isSwitchingTracks: boolean
-  // Last played track ID for restoration on app load
-  lastPlayedTrackId: string
   readonly activeTrackId: string
   readonly activeTrack?: Track
 }
@@ -54,9 +60,9 @@ export const createPlayerStore = () => {
     duration: 0,
     isMuted: false,
     volume: 100,
-    trackTimestamps: {},
+    activeMinutes: [],
+    currentActiveMinute: null,
     isSwitchingTracks: false,
-    lastPlayedTrackId: '',
     get activeTrackId(): string {
       // eslint-disable-next-line no-use-before-define
       return activeTrackIdMemo()
@@ -148,7 +154,6 @@ export const createPlayerStore = () => {
       setState({
         currentTime: savedTimestamp,
         currentTimeChanged: true,
-        lastPlayedTrackId: trackId,
       })
     })
 
@@ -360,32 +365,112 @@ export const createPlayerStore = () => {
     })
   }
 
-  const saveTrackTimestamp = (trackId: string, timestamp: number) => {
-    // Only save if timestamp is significant (more than 5 seconds and not near the end)
-    if (timestamp > 5 && timestamp < state.duration - 10) {
-      setState('trackTimestamps', trackId, timestamp)
+  // ActiveMinute utility functions
+  const getActiveMinuteTimestamp = (timestamp: number): number => {
+    // Floor to nearest minute (timestamp is already in milliseconds)
+    return Math.floor(timestamp / 60000) * 60000 // 60000 = 60 * 1000 (milliseconds per minute)
+  }
+
+  const ensureActiveMinuteForCurrentTime = (trackId: string, trackTimestamp: number) => {
+    const currentMinuteTimestamp = getActiveMinuteTimestamp(Date.now())
+    
+    // Check if we're transitioning to a new minute
+    const isNewMinute = !state.currentActiveMinute || 
+                       state.currentActiveMinute.activeminute_timestamp_ms !== currentMinuteTimestamp
+    
+    if (isNewMinute && state.currentActiveMinute) {
+      // Persist the previous complete minute before creating new one
+      setState('activeMinutes', (prev) => [...prev, state.currentActiveMinute!])
+      console.log(`[ActiveMinute] Persisted completed minute ${state.currentActiveMinute.activeminute_timestamp_ms}`)
+    }
+    
+    if (isNewMinute) {
+      // Create new ActiveMinute in memory for this minute
+      const activeMinute: ActiveMinute = {
+        activeminute_timestamp_ms: currentMinuteTimestamp,
+        track_id: trackId,
+        track_timestamp_ms: trackTimestamp * 1000,
+      }
+      
+      setState({ currentActiveMinute: activeMinute })
+      console.log(`[ActiveMinute] Created in-memory minute ${currentMinuteTimestamp} for track ${trackId} at ${trackTimestamp}s`)
+    } else {
+      // Update existing in-memory ActiveMinute with new track info
+      setState({
+        currentActiveMinute: {
+          ...state.currentActiveMinute!,
+          track_id: trackId,
+          track_timestamp_ms: trackTimestamp * 1000,
+        }
+      })
+      console.log(`[ActiveMinute] Updated in-memory minute for track ${trackId} at ${trackTimestamp}s`)
+    }
+  }
+
+  const destroyCurrentActiveMinute = () => {
+    if (state.currentActiveMinute) {
+      console.log(`[ActiveMinute] Discarded incomplete minute ${state.currentActiveMinute.activeminute_timestamp_ms}`)
+      setState({ currentActiveMinute: null })
     }
   }
 
   const getSavedTrackTimestamp = (trackId: string): number => {
-    return state.trackTimestamps[trackId] || 0
+    // Get all ActiveMinutes for this track (persisted + current in-memory)
+    const allActiveMinutes = [...state.activeMinutes]
+    if (state.currentActiveMinute && state.currentActiveMinute.track_id === trackId) {
+      allActiveMinutes.push(state.currentActiveMinute)
+    }
+    
+    // Find the most recent ActiveMinute for this track (by activeminute_timestamp_ms)
+    const trackActiveMinutes = allActiveMinutes
+      .filter(am => am.track_id === trackId)
+      .sort((a, b) => b.activeminute_timestamp_ms - a.activeminute_timestamp_ms)
+    
+    if (trackActiveMinutes.length > 0) {
+      return trackActiveMinutes[0].track_timestamp_ms / 1000 // Convert back to seconds
+    }
+    
+    return 0
   }
 
   const clearTrackTimestamp = (trackId: string) => {
-    setState('trackTimestamps', trackId, undefined!)
+    // Remove all persisted ActiveMinutes for this track
+    setState('activeMinutes', (prev) => prev.filter(am => am.track_id !== trackId))
+    
+    // Clear current active minute if it's for this track
+    if (state.currentActiveMinute?.track_id === trackId) {
+      setState({ currentActiveMinute: null })
+    }
+  }
+
+  const saveTrackTimestamp = (trackId: string, timestamp: number) => {
+    // Only save if timestamp is significant (more than 5 seconds and not near the end)
+    if (timestamp > 5 && timestamp < state.duration - 10) {
+      ensureActiveMinuteForCurrentTime(trackId, timestamp)
+    }
   }
 
   const restoreLastPlayedTrack = () => {
-    const { lastPlayedTrackId } = state
+    // Get all ActiveMinutes (persisted + current in-memory)
+    const allActiveMinutes = [...state.activeMinutes]
+    if (state.currentActiveMinute) {
+      allActiveMinutes.push(state.currentActiveMinute)
+    }
     
-    if (!lastPlayedTrackId) {
-      console.log('[Player] No last played track to restore')
+    if (allActiveMinutes.length === 0) {
+      console.log('[Player] No active minutes to restore from')
       return
     }
-
-    const track = entities.tracks[lastPlayedTrackId]
+    
+    // Sort by activeminute_timestamp_ms descending to get the most recent
+    const mostRecentActiveMinute = allActiveMinutes
+      .sort((a, b) => b.activeminute_timestamp_ms - a.activeminute_timestamp_ms)[0]
+    
+    const trackId = mostRecentActiveMinute.track_id
+    const track = entities.tracks[trackId]
+    
     if (!track) {
-      console.log(`[Player] Last played track ${lastPlayedTrackId} not found in library`)
+      console.log(`[Player] Track ${trackId} from most recent active minute not found in library`)
       return
     }
 
@@ -393,23 +478,23 @@ export const createPlayerStore = () => {
     const allTracks = Object.values(entities.tracks)
     const allTrackIds = allTracks.map(t => t.id)
     
-    // Find the index of the last played track
-    const trackIndex = allTrackIds.indexOf(lastPlayedTrackId)
+    // Find the index of the track
+    const trackIndex = allTrackIds.indexOf(trackId)
     
     if (trackIndex === -1) {
-      console.log(`[Player] Last played track ${lastPlayedTrackId} not found in track list`)
+      console.log(`[Player] Track ${trackId} not found in track list`)
       return
     }
 
-    console.log(`[Player] Restoring last played track: ${track.name}`)
+    console.log(`[Player] Restoring from most recent active minute: ${track.name}`)
     
-    // Initialize the player with the last played track but don't start playing
+    // Initialize the player with the track but don't start playing
     batch(() => {
       setState({
         trackIds: allTrackIds,
         activeTrackIndex: trackIndex,
         // Get saved timestamp for this track
-        currentTime: getSavedTrackTimestamp(lastPlayedTrackId),
+        currentTime: getSavedTrackTimestamp(trackId),
         currentTimeChanged: true,
         // Don't auto-play, just prepare the track
         isPlaying: false,
@@ -436,11 +521,11 @@ export const createPlayerStore = () => {
   // Auto-restore last played track when entities are loaded
   createEffect(() => {
     const { tracks } = entities
-    const { lastPlayedTrackId } = state
+    const { activeMinutes, currentActiveMinute } = state
     
-    // Only restore if we have tracks, a saved track ID, and no active track yet
-    if (Object.keys(tracks).length > 0 && lastPlayedTrackId && state.activeTrackIndex === -1) {
-      console.log('[Player] Entities loaded, attempting to restore last played track')
+    // Only restore if we have tracks, some active minutes, and no active track yet
+    if (Object.keys(tracks).length > 0 && (activeMinutes.length > 0 || currentActiveMinute) && state.activeTrackIndex === -1) {
+      console.log('[Player] Entities loaded, attempting to restore from active minutes')
       restoreLastPlayedTrack()
     }
   })
@@ -467,6 +552,8 @@ export const createPlayerStore = () => {
     getSavedTrackTimestamp,
     clearTrackTimestamp,
     restoreLastPlayedTrack,
+    ensureActiveMinuteForCurrentTime,
+    destroyCurrentActiveMinute,
   }
 
   const persistedItems = [
@@ -491,14 +578,9 @@ export const createPlayerStore = () => {
       load: (repeat: State['repeat']) => setState({ repeat }),
     },
     {
-      key: 'player-track-timestamps',
-      selector: () => state.trackTimestamps,
-      load: (trackTimestamps: Record<string, number>) => setState({ trackTimestamps }),
-    },
-    {
-      key: 'player-last-played-track-id',
-      selector: () => state.lastPlayedTrackId,
-      load: (lastPlayedTrackId: string) => setState({ lastPlayedTrackId }),
+      key: 'player-active-minutes',
+      selector: () => state.activeMinutes,
+      load: (activeMinutes: ActiveMinute[]) => setState({ activeMinutes }),
     },
   ]
 

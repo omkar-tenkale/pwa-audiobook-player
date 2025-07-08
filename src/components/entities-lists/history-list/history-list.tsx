@@ -14,28 +14,63 @@ export const HistoryList: VoidComponent<HistoryListProps> = (props) => {
 
   // Filter tracks that have saved progress and sort by most recently played
   const historyItems = createMemo(() => {
-    const { trackTimestamps } = playerState
+    const { activeMinutes, currentActiveMinute } = playerState
     const { tracks } = entities
 
-    // Get tracks that have saved progress (timestamps)
-    const tracksWithProgress = Object.keys(trackTimestamps)
-      .filter(trackId => tracks[trackId] && trackTimestamps[trackId] > 0)
-      .map(trackId => ({
+    // Get all active minutes (persisted + current in-memory)
+    const allActiveMinutes = [...activeMinutes]
+    if (currentActiveMinute) {
+      allActiveMinutes.push(currentActiveMinute)
+    }
+
+    // Group by track ID and find the most recent for each track
+    const trackProgressMap = new Map<string, { timestamp: number, activeminute_timestamp: number }>()
+    
+    allActiveMinutes.forEach(activeMinute => {
+      const trackId = activeMinute.track_id
+      const existing = trackProgressMap.get(trackId)
+      
+      if (!existing || activeMinute.activeminute_timestamp_ms > existing.activeminute_timestamp) {
+        trackProgressMap.set(trackId, {
+          timestamp: activeMinute.track_timestamp_ms,
+          activeminute_timestamp: activeMinute.activeminute_timestamp_ms
+        })
+      }
+    })
+
+    // Filter tracks that exist and have meaningful progress
+    const tracksWithProgress = Array.from(trackProgressMap.entries())
+      .filter(([trackId, progress]) => tracks[trackId] && progress.timestamp > 5000) // 5 seconds in ms
+      .map(([trackId, progress]) => ({
         id: trackId,
-        timestamp: trackTimestamps[trackId],
+        timestamp: progress.timestamp,
+        activeminute_timestamp: progress.activeminute_timestamp,
         track: tracks[trackId]
       }))
-      .sort((a, b) => b.timestamp - a.timestamp) // Sort by most recent progress
+      .sort((a, b) => b.activeminute_timestamp - a.activeminute_timestamp) // Sort by most recent active minute
 
     return tracksWithProgress.map(item => item.id)
   })
 
   const getProgressText = (trackId: string) => {
-    const timestamp = playerState.trackTimestamps[trackId]
+    const { activeMinutes, currentActiveMinute } = playerState
     const track = entities.tracks[trackId]
     
-    if (!timestamp || !track) return ''
+    if (!track) return ''
     
+    // Get all active minutes for this track (persisted + current in-memory)
+    const allActiveMinutes = [...activeMinutes]
+    if (currentActiveMinute && currentActiveMinute.track_id === trackId) {
+      allActiveMinutes.push(currentActiveMinute)
+    }
+    
+    const trackActiveMinutes = allActiveMinutes
+      .filter(am => am.track_id === trackId)
+      .sort((a, b) => b.activeminute_timestamp_ms - a.activeminute_timestamp_ms)
+    
+    if (trackActiveMinutes.length === 0) return ''
+    
+    const timestamp = trackActiveMinutes[0].track_timestamp_ms / 1000 // Convert to seconds
     const progress = (timestamp / track.duration) * 100
     const timeRemaining = track.duration - timestamp
     
