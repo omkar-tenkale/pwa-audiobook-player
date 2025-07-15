@@ -2,6 +2,164 @@
 # This YAML file serves as the source of truth for all Osho content
 
 series:
+  - id: "kathopanishad-by-osho-01-19"
+    name: "Kathopanishad 01-19"
+    description: "A series of 19 discourses Kathopanishad by Osho. These discourses were given in MOUNT ABU during OCT 06-13 1973."
+    year: "1973"
+    image: "/images/albums/kathopanishad-by-osho-01-19.webp"
+    tracks:
+      - id: "kath_001"
+        name: "Kathopanishad 01"
+        duration: 7043  # 01:57:23
+        trackNo: 1
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_01.mp3"
+        description: "प्रथम वल्ली - ॐ उशन्‌ ह वै वाजश्रवसः सर्ववेदसं ददौ। तस्य ह नचिकेता नाम पुत्र आस।।1।। तंह कुमारं सन्तं दक्षिणासु नीयमानासु श्रद्धाऽऽविवेश सोऽमन्यत।।2।।"
+        topics: ["kathopanishad", "upanishad", "meditation", "death", "naciketa"]
+
+      - id: "kath_002"
+        name: "Kathopanishad 02"
+        duration: 4502  # 01:15:02
+        trackNo: 2
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_02.mp3"
+        description: "येयं प्रेते विचिकित्सा मनुष्येऽस्तीत्येके नायमस्तीति चैके। एतद्विद्यामनुशिष्टस्त्वयाहं वराणामेष वरस्तृतीयः।।20।।"
+        topics: ["kathopanishad", "death", "afterlife", "wisdom"]
+
+      - id: "kath_003"
+        name: "Kathopanishad 03"
+        duration: 4774  # 01:19:34
+        trackNo: 3
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_03.mp3"
+        description: "द्वितीय वल्ली - अन्यत्छ्रेयोऽन्यदुतैव प्रेयस्ते उभे नानार्थे पुरुषं सिनीतः। तयोः श्रेय आददानस्य साधु भवति हीयतेऽर्थाद्य उ प्रेयो वृणीते।।1।।"
+        topics: ["kathopanishad", "choice", "pleasure", "good"]
+
+      - id: "kath_004"
+        name: "Kathopanishad 04"
+        duration: 5212  # 01:26:52
+        trackNo: 4
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_04.mp3"
+        description: "न साम्परायः प्रतिभाति बालं प्रमाद्यन्तं वित्तमोहेन मूढम्‌। अयं लोको नास्ति पर इति मानी पुनः पुनर्वशमापद्यते मे।।6।।"
+        topics: ["kathopanishad", "ignorance", "material-attachment", "rebirth"]
+
+      - id: "kath_005"
+        name: "Kathopanishad 05"
+        duration: 4302  # 01:11:42
+        trackNo: 5
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_05.mp3"
+        description: "अन्यत्र धर्मादन्यत्राधर्मादन्यत्रास्मात्कृताकृतात्‌। अन्यत्र भूताच्च भव्याच्च यत्तत्पश्यसि तद्वद।।14।।"
+        topics: ["kathopanishad", "dharma", "beyond-time", "transcendence"]
+
+      - id: "kath_006"
+        name: "Kathopanishad 06"
+        duration: 4445  # 01:14:05
+        trackNo: 6
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_06.mp3"
+        description: "आसीनो दूरं व्रजति शयानो याति सर्वतः। कस्तं मदामदं देवं मदन्यो ज्ञातुमर्हति।।21।।"
+        topics: ["kathopanishad", "consciousness", "omnipresence", "divine"]
+
+      - id: "kath_007"
+        name: "Kathopanishad 07"
+        duration: 4306  # 01:11:46
+        trackNo: 7
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_07.mp3"
+        description: "यस्तु विज्ञानवान्‌ भवति युक्तेन मनसा सदा। तस्येन्द्रियाणि वश्यानि सदश्वा इव सारथेः।।6।।"
+        topics: ["kathopanishad", "wisdom", "mind-control", "senses"]
+
+      - id: "kath_008"
+        name: "Kathopanishad 08"
+        duration: 4834  # 01:20:34
+        trackNo: 8
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_08.mp3"
+        description: "एष सर्वेषु भूतेषु गूढोत्मा न प्रकाशते। दृश्यते त्वग्र्यया बुद्धया सूक्ष्मया सूक्ष्मदर्शिभिः।।12।।"
+        topics: ["kathopanishad", "hidden-self", "subtle-perception", "atman"]
+
+      - id: "kath_009"
+        name: "Kathopanishad 09"
+        duration: 4074  # 01:07:54
+        trackNo: 9
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_09.mp3"
+        description: "द्वितीय अध्याय प्रथम वल्ली - परांचि खानि व्यतृणत्‌ स्वयंभूस्तस्मात्परांपश्यति नान्तरात्मन्‌। कश्चिद्धीरः प्रत्यगात्मानमैक्षदावृत्तच्रुरमृतत्वमिच्छन्‌।।1।।"
+        topics: ["kathopanishad", "inner-vision", "self-realization", "immortality"]
+
+      - id: "kath_010"
+        name: "Kathopanishad 10"
+        duration: 3622  # 01:00:22
+        trackNo: 10
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_10.mp3"
+        description: "मनसैवेदमाप्तव्यं नेह नानास्ति किंचन। मृत्योः स मृत्युं गच्छति य इह नानेव पश्यति।।11।।"
+        topics: ["kathopanishad", "mind", "unity", "non-duality"]
+
+      - id: "kath_011"
+        name: "Kathopanishad 11"
+        duration: 4362  # 01:12:42
+        trackNo: 11
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_11.mp3"
+        description: "द्वितीय वल्ली - पुरमेकादशद्वारमजस्यावक्रचेतसः। अनुष्ठाय न शोचति विमुक्तश्च विमुच्यते।।एतद्वै तत्‌।।1।।"
+        topics: ["kathopanishad", "body-temple", "liberation", "consciousness"]
+
+      - id: "kath_012"
+        name: "Kathopanishad 12"
+        duration: 3665  # 01:01:05
+        trackNo: 12
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_12.mp3"
+        description: "अग्निर्यथैको भुवनं प्रविष्टो रूपं रूपं प्रतिरूपो बभूव। एकस्तथा सर्वभूतान्तरात्मा रूपं रूपं प्रतिरूपो बहिश्च।।9।।"
+        topics: ["kathopanishad", "fire-metaphor", "one-in-many", "universal-soul"]
+
+      - id: "kath_013"
+        name: "Kathopanishad 13"
+        duration: 4203  # 01:10:03
+        trackNo: 13
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_13.mp3"
+        description: "तृतीय वल्ली - ऊर्ध्वमूलोऽवाक्शाख एषोऽश्वत्थः सनातनः। तदेव शुक्रं तद्‌‌ ब्रह्म तदेवामृतमुच्यते।"
+        topics: ["kathopanishad", "cosmic-tree", "brahman", "immortality"]
+
+      - id: "kath_014"
+        name: "Kathopanishad 14"
+        duration: 4285  # 01:11:25
+        trackNo: 14
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_14.mp3"
+        description: "यथाऽऽदर्शे तथाऽऽत्मनि यथा स्वप्ने तथा पितृलोके। यथाप्सु परीव ददृशे तथा गन्धर्वलोके छायातपयोरिव ब्रह्मलोके।।5।।"
+        topics: ["kathopanishad", "reflection", "dream-reality", "different-planes"]
+
+      - id: "kath_015"
+        name: "Kathopanishad 15"
+        duration: 4272  # 01:11:12
+        trackNo: 15
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_15.mp3"
+        description: "न संदृशे तिष्ठति रूपमस्य न च्रुषा पश्यति कश्चनैनम्‌। हृदा मनीषा मनसाभिक्लृप्तो य एतद् विदुरमृतास्ते भवन्ति।।9।।"
+        topics: ["kathopanishad", "formless", "heart-knowledge", "immortality"]
+
+      - id: "kath_016"
+        name: "Kathopanishad 16"
+        duration: 4595  # 01:16:35
+        trackNo: 16
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_16.mp3"
+        description: "नैव वाचा न मनसा प्राप्तुं शक्यो न च्रुषा। अस्तीति ब्रुवतोऽन्यत्र कथं तदुपलभ्यते।।12।।"
+        topics: ["kathopanishad", "beyond-words", "beyond-mind", "direct-experience"]
+
+      - id: "kath_017"
+        name: "Kathopanishad 17"
+        duration: 4056  # 01:07:36
+        trackNo: 17
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_17.mp3"
+        description: "शतं चैका च हृदयस्य नाड्‌यस्तासां मूर्धानमभिनिः सृतैका। तयोर्ध्वमायन्नमृतत्वमेति विष्वंङ्‌न्या उत्क्रमणे भवन्ति।।16।।"
+        topics: ["kathopanishad", "energy-channels", "sushumna", "liberation"]
+
+      - id: "kath_018"
+        name: "Kathopanishad 18"
+        duration: 2197  # 00:36:37
+        trackNo: 18
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_Dyanamic_18.mp3"
+        description: "Dynamic Meditation session"
+        topics: ["kathopanishad", "dynamic-meditation", "osho-meditation"]
+
+      - id: "kath_019"
+        name: "Kathopanishad 19"
+        duration: 1943  # 00:32:23
+        trackNo: 19
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Kathopanishad_Tratak_19.mp3"
+        description: "Tratak Meditation session"
+        topics: ["kathopanishad", "tratak-meditation", "osho-meditation"]
+
   - id: "tao-upanishad-by-osho-01-127"
     name: "Tao Upanishad"
     description: "Osho's commentary on the Tao Te Ching and Upanishads"
@@ -151,7 +309,7 @@ metadata:
   appName: "Osho Digital Library"
   description: "A comprehensive digital library of Osho's teachings"
   version: "1.0.0"
-  lastUpdated: "2024-01-15"
-  totalTracks: 16
-  totalSeries: 2
+  lastUpdated: "2024-12-19"
+  totalTracks: 35
+  totalSeries: 3
   defaultTheme: "zen" 
