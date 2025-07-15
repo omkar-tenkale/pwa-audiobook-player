@@ -94,7 +94,9 @@ export const transformContentToAppData = () => {
         fileWrapper: createUrlFileWrapper(track.audioUrl) as any,
         // Add custom properties for Osho content
         description: track.description,
-        topics: track.topics
+        topics: track.topics,
+        // Use album image for all tracks in the series
+        image: series.image
       }
       
       tracks[track.id] = trackData
@@ -111,7 +113,9 @@ export const transformContentToAppData = () => {
       year: series.year,
       trackIds: albumTrackIds,
       // Add custom properties
-      description: series.description
+      description: series.description,
+      // Use series image for album artwork
+      image: series.image
     }
     
     albums[series.id] = album

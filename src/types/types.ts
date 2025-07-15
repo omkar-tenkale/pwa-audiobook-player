@@ -15,7 +15,7 @@ interface FileUrl {
 
 export type FileWrapper = FileLegacy | FileHandle | FileUrl
 
-export type ImageType = Blob | undefined
+export type ImageType = Blob | string | undefined
 
 export const MusicItemType = {
   TRACK: 0,
