@@ -29,8 +29,8 @@ interface StandaloneTrack extends ContentTrack {
 
 interface ContentStructure {
   series: ContentSeries[]
-  standalone_talks: StandaloneTrack[]
-  topics: Array<{ id: string; name: string; description: string }>
+  standalone_talks?: StandaloneTrack[]
+  topics?: Array<{ id: string; name: string; description: string }>
   metadata: {
     appName: string
     description: string
@@ -118,7 +118,7 @@ export const transformContentToAppData = () => {
   })
   
   // Process standalone talks
-  content.standalone_talks.forEach(talk => {
+  content.standalone_talks?.forEach(talk => {
     const trackData: Track = {
       id: talk.id,
       type: MusicItemType.TRACK,
@@ -139,7 +139,7 @@ export const transformContentToAppData = () => {
   })
   
   // Create standalone talks album
-  const standaloneTrackIds = content.standalone_talks.map(talk => talk.id)
+  const standaloneTrackIds = content.standalone_talks?.map(talk => talk.id) || []
   if (standaloneTrackIds.length > 0) {
     albums['standalone_talks'] = {
       id: 'standalone_talks',

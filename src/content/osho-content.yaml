@@ -2,68 +2,149 @@
 # This YAML file serves as the source of truth for all Osho content
 
 series:
-  - id: "osho_hindi_discourses"
-    name: "Hindi Discourses"
-    description: "Osho's teachings in Hindi language"
-    year: "1980"
-    image: "/images/series/hindi-discourses.jpg"
+  - id: "tao-upanishad-by-osho-01-127"
+    name: "Tao Upanishad"
+    description: "Osho's commentary on the Tao Te Ching and Upanishads"
+    year: "1971"
+    image: "https://oshoworld.com/_next/image?url=https%3A%2F%2Foshoworld.com%2Fuploads%2F200px-AmiJharat1.jpg&w=384&q=75"
     tracks:
-      - id: "hd_001"
-        name: "Bin Bati Bin Tel - Part 1"
-        duration: 2700  # 45 minutes
+      - id: "tu_001"
+        name: "Tao Upanishad 01"
+        duration: 5126  # 01:25:26
         trackNo: 1
-        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
-        description: "Osho's wisdom on inner light without external means"
-        topics: ["meditation", "inner light", "spirituality"]
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_001.mp3"
+        description: "Chapter 1 : Sutra 1 - The Absolute Tao. The Tao that can be trodden is not the enduring and unchanging Tao. The name that can be named is not the enduring and unchanging name."
+        topics: ["tao", "absolute", "meditation"]
         
-      - id: "hd_002"
-        name: "Bin Bati Bin Tel - Part 2"
-        duration: 2700  # 45 minutes
+      - id: "tu_002"
+        name: "Tao Upanishad 02"
+        duration: 5967  # 01:39:27
         trackNo: 2
-        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
-        description: "Continuing the exploration of inner illumination"
-        topics: ["consciousness", "enlightenment", "truth"]
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_002.mp3"
+        description: "Chapter 1 : Sutra 2 - (Conceived of as) having no name, it is the originator of heaven and earth; the named is the mother of all things."
+        topics: ["tao", "nameless", "creation"]
+        
+      - id: "tu_003"
+        name: "Tao Upanishad 03"
+        duration: 5366  # 01:29:26
+        trackNo: 3
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_003.mp3"
+        description: "Chapter 1 : Sutra 3 - Always stripped of passion we must be found, If life's Secret we would sound; But if passion always within us be, Its outer fringe is all that we shall see."
+        topics: ["tao", "passion", "wisdom"]
+        
+      - id: "tu_004"
+        name: "Tao Upanishad 04"
+        duration: 5471  # 01:31:11
+        trackNo: 4
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_004.mp3"
+        description: "Chapter 1 : Sutra 4 - Under these two aspects, it is really the same; but as development takes place, it receives the different names. Together we call them the Mystery."
+        topics: ["tao", "mystery", "duality"]
+        
+      - id: "tu_005"
+        name: "Tao Upanishad 05"
+        duration: 5053  # 01:24:13
+        trackNo: 5
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_005.mp3"
+        description: "Chapter 2 : Sutra 1 - The Rise of Relative Opposites. When the people of the Earth all know beauty as beauty, there arises (the recognition of) ugliness."
+        topics: ["tao", "opposites", "duality"]
+        
+      - id: "tu_006"
+        name: "Tao Upanishad 06"
+        duration: 6601  # 01:50:01
+        trackNo: 6
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_006.mp3"
+        description: "Chapter 2 : Sutra 2 - So it is that existence and non–existence give birth the one to the idea of the other; that difficulty and ease produce the one the idea of the other."
+        topics: ["tao", "existence", "opposites"]
+        
+      - id: "tu_007"
+        name: "Tao Upanishad 07"
+        duration: 5788  # 01:36:28
+        trackNo: 7
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_007.mp3"
+        description: "Chapter 2 : Sutra 3 - Therefore the sage manages affairs without action; and conveys his doctrine without words."
+        topics: ["tao", "wu-wei", "action"]
+        
+      - id: "tu_008"
+        name: "Tao Upanishad 08"
+        duration: 5357  # 01:29:17
+        trackNo: 8
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_008.mp3"
+        description: "Chapter 2 : Sutra 4 - All things take their rise, but he does not turn away from them; He gives them life, but does not take possession of them."
+        topics: ["tao", "non-attachment", "wisdom"]
+        
+      - id: "tu_009"
+        name: "Tao Upanishad 09"
+        duration: 6867  # 01:54:27
+        trackNo: 9
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_009.mp3"
+        description: "Chapter 3 : Sutra 1 - Action without Action. Not to value and employ men of superior ability is the way to keep the people from rivalry among themselves."
+        topics: ["tao", "wu-wei", "leadership"]
+        
+      - id: "tu_010"
+        name: "Tao Upanishad 10"
+        duration: 3841  # 01:04:01
+        trackNo: 10
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Tao_Upanishad_010.mp3"
+        description: "Chapter 3 : Sutra 2 - Therefore, the Sage, in exercise of his Government empties their minds, fills their bellies, weakens their wills and strengthens their bones."
+        topics: ["tao", "governance", "wisdom"]
 
-  - id: "osho_zen_teachings"
-    name: "Zen Teachings"
-    description: "Osho's interpretation of Zen philosophy"
-    year: "1985"
-    image: "/images/series/zen-teachings.jpg"
+  - id: "naye-bharat-ki-khoj-by-osho-01-07"
+    name: "Naye Bharat Ki Khoj"
+    description: "Osho's vision for a new India - social and spiritual transformation"
+    year: "1970"
+    image: "https://oshoworld.com/_next/image?url=https%3A%2F%2Foshoworld.com%2Fuploads%2F200px-AmiJharat1.jpg&w=384&q=75"
     tracks:
-      - id: "zt_001"
-        name: "The Way of Zen"
-        duration: 2700  # 45 minutes
-        trackNo: 1
-        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
-        description: "Introduction to Zen consciousness and awareness"
-        topics: ["zen", "consciousness", "awareness"]
-        
-      - id: "zt_002"
-        name: "Beyond Mind"
-        duration: 2700  # 45 minutes
+      - id: "nbkk_002"
+        name: "Naye Bharat Ki Khoj 02"
+        duration: 4501  # 01:15:01
         trackNo: 2
-        audioUrl: "https://archive.org/download/AshtavakraGitaHindiAudiobook/Adhyaay%2001%20to%2002.mp3"
-        description: "Transcending the limitations of the mind"
-        topics: ["meditation", "transcendence", "no-mind"]
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_02.mp3"
+        description: "Osho's insights on building a new India"
+        topics: ["social-transformation", "india", "spirituality"]
+        
+      - id: "nbkk_003"
+        name: "Naye Bharat Ki Khoj 03"
+        duration: 4177  # 01:09:37
+        trackNo: 3
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_03.mp3"
+        description: "Continuing the exploration of India's spiritual potential"
+        topics: ["social-transformation", "culture", "spirituality"]
+        
+      - id: "nbkk_004"
+        name: "Naye Bharat Ki Khoj 04"
+        duration: 4992  # 01:23:12
+        trackNo: 4
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_04.mp3"
+        description: "Vision for cultural and spiritual renaissance"
+        topics: ["renaissance", "culture", "wisdom"]
+        
+      - id: "nbkk_005"
+        name: "Naye Bharat Ki Khoj 05"
+        duration: 3226  # 00:53:46
+        trackNo: 5
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_05.mp3"
+        description: "Pathways to individual and collective transformation"
+        topics: ["transformation", "society", "consciousness"]
+        
+      - id: "nbkk_006"
+        name: "Naye Bharat Ki Khoj 06"
+        duration: 4247  # 01:10:47
+        trackNo: 6
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_06.mp3"
+        description: "Building bridges between tradition and modernity"
+        topics: ["tradition", "modernity", "integration"]
+        
+      - id: "nbkk_007"
+        name: "Naye Bharat Ki Khoj 07"
+        duration: 4190  # 01:09:50
+        trackNo: 7
+        audioUrl: "https://oshoworld.com/wp-content/uploads/2020/11/Hindi%20Audio/OSHO-Naye_Bharat_Ki_Khoj_07.mp3"
+        description: "The future of Indian civilization and spirituality"
+        topics: ["future", "civilization", "spirituality"]
 
 standalone_talks: []
 
-topics:
-  - id: "meditation"
-    name: "Meditation"
-    description: "Techniques and philosophy of meditation"
-    
-  - id: "zen"
-    name: "Zen"
-    description: "Zen philosophy and practices"
-    
-  - id: "consciousness"
-    name: "Consciousness"
-    description: "Exploration of consciousness and awareness"
-    
-  - id: "spirituality"
-    name: "Spirituality"
-    description: "Spiritual growth and understanding"
+topics: []
 
 # Metadata
 metadata:
@@ -71,6 +152,6 @@ metadata:
   description: "A comprehensive digital library of Osho's teachings"
   version: "1.0.0"
   lastUpdated: "2024-01-15"
-  totalTracks: 4
+  totalTracks: 16
   totalSeries: 2
   defaultTheme: "zen" 
