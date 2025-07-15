@@ -6,7 +6,7 @@ series:
     name: "Tao Upanishad"
     description: "Osho's commentary on the Tao Te Ching and Upanishads"
     year: "1971"
-    image: "https://oshoworld.com/_next/image?url=https%3A%2F%2Foshoworld.com%2Fuploads%2F200px-AmiJharat1.jpg&w=384&q=75"
+    image: "/images/albums/tao-upanishad-by-osho-01-127.webp"
     tracks:
       - id: "tu_001"
         name: "Tao Upanishad 01"
@@ -92,7 +92,7 @@ series:
     name: "Naye Bharat Ki Khoj"
     description: "Osho's vision for a new India - social and spiritual transformation"
     year: "1970"
-    image: "https://oshoworld.com/_next/image?url=https%3A%2F%2Foshoworld.com%2Fuploads%2F200px-AmiJharat1.jpg&w=384&q=75"
+    image: "/images/albums/naye-bharat-ki-khoj-by-osho-01-07.webp"
     tracks:
       - id: "nbkk_002"
         name: "Naye Bharat Ki Khoj 02"
