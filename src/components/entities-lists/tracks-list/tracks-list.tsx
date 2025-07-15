@@ -55,6 +55,39 @@ const TrackListItem: VoidComponent<TracksListItemProps> = (props) => {
 
   const track = () => entities.tracks[props.item] as Track
 
+  const getTrackProgressTime = (trackId: string) => {
+    const { activeMinutes, currentActiveMinute } = playerState
+    const trackItem = track()
+    
+    if (!trackItem) return null
+    
+    // Get all active minutes for this track (persisted + current in-memory)
+    const allActiveMinutes = [...activeMinutes]
+    if (currentActiveMinute && currentActiveMinute.track_id === trackId) {
+      allActiveMinutes.push(currentActiveMinute)
+    }
+    
+    const trackActiveMinutes = allActiveMinutes
+      .filter(am => am.track_id === trackId)
+      .sort((a, b) => b.activeminute_timestamp_ms - a.activeminute_timestamp_ms)
+    
+    if (trackActiveMinutes.length === 0) return null
+    
+    const timestamp = trackActiveMinutes[0].track_timestamp_ms / 1000 // Convert to seconds
+    return timestamp
+  }
+
+  const getTimeDisplay = () => {
+    const trackItem = track()
+    const currentPosition = getTrackProgressTime(trackItem.id)
+    
+    if (currentPosition !== null && currentPosition > 0) {
+      return `${formatTime(currentPosition)}/${formatTime(trackItem.duration)}`
+    }
+    
+    return formatTime(trackItem.duration)
+  }
+
   const getMenuItems = () => {
     const trackItem = track()
     const { artists, id: trackId } = trackItem
@@ -156,7 +189,7 @@ const TrackListItem: VoidComponent<TracksListItemProps> = (props) => {
         <>
           <div class={styles.album}>{track().album || UNKNOWN_ITEM_STRING}</div>
 
-          <div class={styles.time}>{formatTime(track().duration)}</div>
+          <div class={styles.time}>{getTimeDisplay()}</div>
         </>
       }
       getMenuItems={getMenuItems}
